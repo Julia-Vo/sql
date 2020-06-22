@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:\Users\AC223319\Documents\GitHub\CodeCademy\db.sqlite" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="structure browser pragmas query" current="3"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="200"/><column_width id="3" width="2092"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,9:maincountries"/><default_encoding codec=""/><browse_table_settings/></tab_browse><tab_sql><sql name="population_years2.sql">SELECT * 
+FROM countries;
+
+-- # of African countries 
+SELECT COUNT(*)
+AS &quot;African Countries&quot;
+FROM countries
+WHERE continent = 'Africa';
+
+-- pop of Oceania in 2005
+SELECT SUM(population_years.population)
+AS &quot;2005 Pop of Oceania&quot;
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE population_years.year = '2005'
+AND countries.continent = 'Oceania';
+
+-- Avg pop of South America countries, 2003
+SELECT continent, year, AVG(population) AS &quot;AVG Pop&quot;
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE countries.continent = 'South America'
+AND population_years.year = '2003';
+
+-- Country with the smallest pop, 2007
+SELECT name, population, year
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE year = '2007'
+AND population IS NOT NULL
+ORDER BY population
+LIMIT 1;
+
+-- Avg. pop of Poland, all years in dataset
+SELECT name, AVG(population) AS &quot;Avg. Pop in Data&quot;
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE name = 'Poland';
+
+-- # of countries countaining &quot;The&quot; in their name
+Select COUNT(DISTINCT name) AS &quot;# of Countries with The:&quot;
+FROM countries
+WHERE name LIKE '%The%';
+
+-- Pop of each continent in 2010
+
+SELECT continent, SUM(population) AS &quot;2010 Pop&quot;
+FROM countries
+JOIN population_years
+ON countries.id = population_years.country_id
+WHERE year = '2010'
+GROUP BY 1
+ORDER BY 2 DESC;
+</sql><current_tab id="0"/></tab_sql></sqlb_project>
